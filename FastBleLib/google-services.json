@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "838069304662",
+    "firebase_url": "https://activity-monitor-83e72.firebaseio.com",
+    "project_id": "activity-monitor-83e72",
+    "storage_bucket": "activity-monitor-83e72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838069304662:android:bf1f20fcc4e1109fc86af7",
+        "android_client_info": {
+          "package_name": "com.clj.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838069304662-kii12k3ll3eldf5og90t3lmj21ofu139.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAezAJ3MTFSkxhGjcjQFnGP0Z1lxn4w5PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838069304662-kii12k3ll3eldf5og90t3lmj21ofu139.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "838069304662-kii12k3ll3eldf5og90t3lmj21ofu139.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clj.activity.operation"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838069304662:android:bf1f20fcc4e1109fc86af7",
+        "android_client_info": {
+          "package_name": "com.clj.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838069304662-kii12k3ll3eldf5og90t3lmj21ofu139.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAezAJ3MTFSkxhGjcjQFnGP0Z1lxn4w5PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838069304662-kii12k3ll3eldf5og90t3lmj21ofu139.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "838069304662-kii12k3ll3eldf5og90t3lmj21ofu139.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clj.activity.operation"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
