@@ -97,6 +97,7 @@ public class CharacteristicListFragment extends Fragment {
     }
 
     public void showData() {
+
         BleDevice bleDevice = ((OperationActivity) getActivity()).getBleDevice();
         String name = bleDevice.getName();
         String mac = bleDevice.getMac();

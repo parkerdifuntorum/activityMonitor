@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -82,6 +83,7 @@ public class CharacteristicOperationFragment extends Fragment {
     public int flag =0;
     public float absoluteValue;
     //private Context this_context = this;
+    public String ts;
 
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference myRef = database.getReference();
@@ -107,7 +109,7 @@ public class CharacteristicOperationFragment extends Fragment {
     public String label2 = "Hypotenuse";
     public String label3 = "Threshold";
     public Double pythagoreanTheorem;
-    public String ts;
+
     public SimpleDateFormat s;
     public DatabaseReference dataRef = myRef.child(user);
 
@@ -1085,9 +1087,17 @@ public class CharacteristicOperationFragment extends Fragment {
 
     public void showData() {
         final BleDevice bleDevice = ((OperationActivity) getActivity()).getBleDevice();
+        System.out.print("the ble device is: \n");
+        System.out.print(bleDevice);
         final BluetoothGattCharacteristic characteristic = ((OperationActivity) getActivity()).getCharacteristic();
+        System.out.print("\nthe ble characteristic is: \n");
+        System.out.print(characteristic);
         final int charaProp = ((OperationActivity) getActivity()).getCharaProp();
+        System.out.print("\nthe charaProp is: \n");
+        System.out.print(charaProp);
         String child = characteristic.getUuid().toString() + String.valueOf(charaProp);
+        System.out.print("\nthe ble device uuid is: \n");
+        System.out.print(child);
 
 
 
@@ -1550,8 +1560,14 @@ public class CharacteristicOperationFragment extends Fragment {
                                                // label1 = "Steps";
                                                 //String label2 = "Hypotenuse";
                                                 //String label3 = "Threshold";
-                                                s = new SimpleDateFormat("ddMMyyyyhhmmssSS");
-                                                ts = s.format(new Date());
+                                                //s = new SimpleDateFormat("ddMMyyyyhhmmssSS");
+                                                //ts = s.format(new Date());
+                                                ts = new SimpleDateFormat("yyyyMMdd_HHmmssSS").format(Calendar.getInstance().getTime());
+
+                                                //System.out.println("The time");
+                                                //System.out.println(timeStamp);
+
+
                                                 dataRef.child("Accelerometer_x").child(ts).setValue(floatValue);
                                                 dataRef.child("Accelerometer_y").child(ts).setValue(floatValue2);
                                                 dataRef.child("Accelerometer_z").child(ts).setValue(floatValue3);

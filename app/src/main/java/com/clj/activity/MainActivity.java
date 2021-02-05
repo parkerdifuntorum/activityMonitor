@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BleManager.getInstance().init(getApplication());
         BleManager.getInstance()
                 .enableLog(true)
-                .setReConnectCount(1, 5000)
+                .setReConnectCount(3, 5000)
                 .setConnectOverTime(20000)
                 .setOperateTimeout(5000000);
 
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println("777777777777777777777777777777777777777777777777777");
         System.out.println(serviceUuids);
         System.out.println(names);
-        System.out.println(mac);
+        System.out.println(et_mac);
 
             boolean isAutoConnect = sw_auto.isChecked();
 
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .setDeviceName(true, names)   // 只扫描指定广播名的设备，可选
                     .setDeviceMac(mac)                  // 只扫描指定mac的设备，可选
                     .setAutoConnect(true)      // 连接时的autoConnect参数，可选，默认false
-                    .setScanTimeOut(15000)              // 扫描超时时间，可选，默认10秒
+                    .setScanTimeOut(1500)              // 扫描超时时间，可选，默认10秒
                     .build();
             BleManager.getInstance().initScanRule(scanRuleConfig);
         }
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //if (bleDevice.getName() =="Skin Temperature") {
                     mDeviceAdapter.addDevice(bleDevice);
                     mDeviceAdapter.notifyDataSetChanged();
-                BleManager.getInstance().connect(bleDevice, new BleGattCallback() {
+                BleManager.getInstance().connect("DD:89:32:82:EC:74", new BleGattCallback() {
                     @Override
                     public void onStartConnect() {
                         progressDialog.show();
@@ -343,7 +343,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void connect(final BleDevice bleDevice) {
-        BleManager.getInstance().connect(bleDevice, new BleGattCallback() {
+        //BleManager.getInstance().connect(bleDevice, new BleGattCallback() {
+        BleManager.getInstance().connect("DD:89:32:82:EC:74", new BleGattCallback() {
             @Override
             public void onStartConnect() {
                 progressDialog.show();
@@ -372,12 +373,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mDeviceAdapter.removeDevice(bleDevice);
                 mDeviceAdapter.notifyDataSetChanged();
 
+
                 if (isActiveDisConnected) {
                     Toast.makeText(MainActivity.this, getString(R.string.active_disconnected), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(MainActivity.this, getString(R.string.disconnected), Toast.LENGTH_LONG).show();
                     ObserverManager.getInstance().notifyObserver(bleDevice);
                 }
+
 
             }
         });

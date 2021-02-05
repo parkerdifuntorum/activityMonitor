@@ -116,6 +116,11 @@ public class OperationActivity extends AppCompatActivity implements Observer {
         toolbar.setTitle("Metabolic Care System");
         updateFragment(page);
         if (currentPage == 1) {
+            System.out.println("Changing pages for the first time");
+            BleDevice bleDevice = getBleDevice();
+            System.out.println(bleDevice);
+            System.out.println(bluetoothGattService);
+            System.out.println(characteristic);
             ((CharacteristicListFragment) fragments.get(1)).showData();
 
         } else if (currentPage == 2) {
@@ -134,21 +139,29 @@ public class OperationActivity extends AppCompatActivity implements Observer {
 
     private void updateFragment(int position) {
         if (position > fragments.size() - 1) {
+            System.out.println("The fragment is outside of the size");
             return;
         }
         for (int i = 0; i < fragments.size(); i++) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             Fragment fragment = fragments.get(i);
             if (i == position) {
+                System.out.println("Showing transaction fragment");
                 transaction.show(fragment);
             } else {
+                System.out.println("Hiding transaction fragment");
                 transaction.hide(fragment);
             }
+            System.out.println("The transaction fragment position is: ");
+            System.out.println(position);
+            transaction.setReorderingAllowed(true);
             transaction.commit();
         }
     }
 
     public BleDevice getBleDevice() {
+        System.out.println("printing ble device in operation activity");
+        System.out.println(bleDevice);
         return bleDevice;
     }
 
