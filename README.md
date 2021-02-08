@@ -55,7 +55,7 @@ If you want to quickly preview all the functions, you can download APK as a test
 
         BleManager.getInstance()
                 .enableLog(true)
-                .setReConnectCount(1, 5000)
+                .setReConnectCount(10, 5000)
 	            .setSplitWriteNum(20)
 	            .setConnectOverTime(10000)
                 .setOperateTimeout(5000);

@@ -88,7 +88,7 @@ public class CharacteristicOperationFragment extends Fragment {
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference myRef = database.getReference();
 
-
+    public BleDevice bleDevice;
     public String selected_location;
     public String selected_activity;
     public String user = "Parker";

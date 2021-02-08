@@ -3,11 +3,17 @@ package com.clj.activity.operation;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -19,12 +25,24 @@ import com.clj.fastble.data.BleDevice;
 
 import java.util.ArrayList;
 import java.util.List;
+class ItemViewModel extends ViewModel {
+    private MutableLiveData<Object> selectedItem = new MutableLiveData<Object>();
+    public void selectItem(Object item) {
+        //selectedItem.setValue(item);
+        selectedItem = (MutableLiveData<Object>) item;
+    }
+    public MutableLiveData<Object> getSelectedItem() {
+        return selectedItem;
+    }
+}
 
 public class OperationActivity extends AppCompatActivity implements Observer {
+    public Context context;
+    private ItemViewModel model;
 
     public static final String KEY_DATA = "key_data";
 
-    private BleDevice bleDevice;
+    public BleDevice bleDevice;
     private BluetoothGattService bluetoothGattService;
     private BluetoothGattCharacteristic characteristic;
     private int charaProp;
@@ -37,9 +55,15 @@ public class OperationActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_operation);
+
+        //model = new ViewModelProvider(this).get(ItemViewModel.class);
+//        model = ViewModelProviders.of(this).get(ItemViewModel.class);
+
+
+        System.out.println("Initializing data in operation activity");
         initData();
+        System.out.println(bleDevice);
         initView();
         initPage();
 
@@ -95,15 +119,21 @@ public class OperationActivity extends AppCompatActivity implements Observer {
 
     private void initData() {
         bleDevice = getIntent().getParcelableExtra(KEY_DATA);
+        //model = new ViewModelProvider(context).get(ItemViewModel.class);
+//        model.selectItem(bleDevice);
         if (bleDevice == null)
             finish();
 
+        //we might need this in the main activity
         titles = new String[]{
                 getString(R.string.service_list),
                 getString(R.string.characteristic_list),
                 //"Metabolic Activity Monitor"};
                 getString(R.string.console)};
                 //String.format("Graph Data");
+        System.out.println("Printing titles");
+        System.out.println(bleDevice);
+        System.out.println(titles);
     }
 
     private void initPage() {

@@ -30,6 +30,7 @@ public class DeviceAdapter extends BaseAdapter {
 
     public void addDevice(BleDevice bleDevice) {
         removeDevice(bleDevice);
+        System.out.println("ADDED BLE DEVICE TO DEVICE LIST");
         bleDeviceList.add(bleDevice);
     }
 
@@ -37,6 +38,7 @@ public class DeviceAdapter extends BaseAdapter {
         for (int i = 0; i < bleDeviceList.size(); i++) {
             BleDevice device = bleDeviceList.get(i);
             if (bleDevice.getKey().equals(device.getKey())) {
+                System.out.println("did device get removed from the list");
                 bleDeviceList.remove(i);
             }
         }

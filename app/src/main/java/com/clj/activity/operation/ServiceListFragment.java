@@ -4,10 +4,16 @@ import android.annotation.TargetApi;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.clj.activity.MainActivity;
 import com.clj.activity.R;
 import com.clj.fastble.BleManager;
 import com.clj.fastble.data.BleDevice;
@@ -25,14 +32,18 @@ import java.util.List;
 import java.util.UUID;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+
 public class ServiceListFragment extends Fragment {
     //public int position = 2;
+
     private TextView txt_name, txt_mac;
     private ResultAdapter mResultAdapter;
+    private ItemViewModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_service_list, null);
+        model = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         initView(v);
         showData();
         return v;
@@ -147,11 +158,14 @@ public class ServiceListFragment extends Fragment {
     private void showData() {
         //mResultAdapter = new ResultAdapter(getActivity());
         BleDevice bleDevice = ((OperationActivity) getActivity()).getBleDevice();
+        MutableLiveData<Object> bleDevice_temp = model.getSelectedItem();
+        //BleDevice bleDevice = bleDevice_temp;
+
         String name = bleDevice.getName();
         String mac = bleDevice.getMac();
         BluetoothGatt gatt = BleManager.getInstance().getBluetoothGatt(bleDevice);
         System.out.println("the namesky");
-        System.out.println(bleDevice);
+        System.out.println(bleDevice.getName());
         System.out.println(gatt);
 //        System.out.println(gatt.getService(UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b")));
         //BluetoothGattService service1 = gatt.getService(UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b"));
@@ -176,12 +190,22 @@ public class ServiceListFragment extends Fragment {
         }
 
         System.out.println("counting services");
-        System.out.println(mResultAdapter.getCount());
+        /*System.out.println(mResultAdapter.getCount());
         BluetoothGattService service = mResultAdapter.getItem(2);
         mResultAdapter.equals(service);
         System.out.println(service);
 
+
+        System.out.println("here's the position of position");
+        //System.out.println(position);
+        //BluetoothGattService service = mResultAdapter.getItem(position);
+        System.out.println(service);*/
+        //mResultAdapter.addResult(service);
         mResultAdapter.notifyDataSetChanged();
+        //((OperationActivity) getActivity()).setBluetoothGattService(service);
+        //((OperationActivity) getActivity()).changePage(1);
+        //Intent intent = new Intent(MainActivity.this, OperationActivity.class);
+        //intent.putExtra(OperationActivity.KEY_DATA, bleDevice);
 
 //        ((OperationActivity) getActivity()).changePage(1);
 

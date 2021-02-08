@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
 
 
+
         BleManager.getInstance().init(getApplication());
         BleManager.getInstance()
                 .enableLog(true)
@@ -113,7 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_scan:
                 if (btn_scan.getText().equals(getString(R.string.start_scan))) {
-                    checkPermissions();
+                    setScanRule();
+                    startScan();
                 } else if (btn_scan.getText().equals(getString(R.string.stop_scan))) {
                     BleManager.getInstance().cancelScan();
                 }
@@ -179,8 +181,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDetail(BleDevice bleDevice) {
                 if (BleManager.getInstance().isConnected(bleDevice)) {
                     setMtu(bleDevice, 251);
+                    System.out.println("going into onDetail portion");
                     Intent intent = new Intent(MainActivity.this, OperationActivity.class);
                     intent.putExtra(OperationActivity.KEY_DATA, bleDevice);
+                    System.out.println("printing key data");
+                    System.out.println(intent);
                     startActivity(intent);
                 }
             }
@@ -289,8 +294,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onScanning(BleDevice bleDevice) {
                 String deviceName = et_name.getText().toString();
                 //if (bleDevice.getName() =="Skin Temperature") {
-                    mDeviceAdapter.addDevice(bleDevice);
-                    mDeviceAdapter.notifyDataSetChanged();
+                    //mDeviceAdapter.addDevice(bleDevice);
+                    //mDeviceAdapter.notifyDataSetChanged();
                 BleManager.getInstance().connect("DD:89:32:82:EC:74", new BleGattCallback() {
                     @Override
                     public void onStartConnect() {
@@ -309,6 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onConnectSuccess(BleDevice bleDevice, BluetoothGatt gatt, int status) {
                         progressDialog.dismiss();
+                        System.out.println("The connection was a SUCCESS!!!!");
                         mDeviceAdapter.addDevice(bleDevice);
                         mDeviceAdapter.notifyDataSetChanged();
 
@@ -317,14 +323,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onDisConnected(boolean isActiveDisConnected, BleDevice bleDevice, BluetoothGatt gatt, int status) {
                         progressDialog.dismiss();
-
+                        //startScan();
                         mDeviceAdapter.removeDevice(bleDevice);
                         mDeviceAdapter.notifyDataSetChanged();
 
                         if (isActiveDisConnected) {
                             Toast.makeText(MainActivity.this, getString(R.string.active_disconnected), Toast.LENGTH_LONG).show();
+                            //startScan();
                         } else {
                             Toast.makeText(MainActivity.this, getString(R.string.disconnected), Toast.LENGTH_LONG).show();
+                            //startScan();
                             ObserverManager.getInstance().notifyObserver(bleDevice);
                         }
 
@@ -370,14 +378,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDisConnected(boolean isActiveDisConnected, BleDevice bleDevice, BluetoothGatt gatt, int status) {
                 progressDialog.dismiss();
 
+                //startScan();
                 mDeviceAdapter.removeDevice(bleDevice);
                 mDeviceAdapter.notifyDataSetChanged();
 
 
                 if (isActiveDisConnected) {
                     Toast.makeText(MainActivity.this, getString(R.string.active_disconnected), Toast.LENGTH_LONG).show();
+                    //startScan();
                 } else {
                     Toast.makeText(MainActivity.this, getString(R.string.disconnected), Toast.LENGTH_LONG).show();
+                    //startScan();
                     ObserverManager.getInstance().notifyObserver(bleDevice);
                 }
 

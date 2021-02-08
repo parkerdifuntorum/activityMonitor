@@ -103,7 +103,10 @@ public class CharacteristicListFragment extends Fragment {
         String mac = bleDevice.getMac();
         BluetoothGatt gatt = BleManager.getInstance().getBluetoothGatt(bleDevice);
         BluetoothGattService service = gatt.getService(UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b"));
-
+if (service != null){
+    System.out.println("found service in characteristic list");
+    System.out.println(service);
+}
         //BluetoothGattService service = ((OperationActivity) getActivity()).getBluetoothGattService();
         //mResultAdapter.clear();
         for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
